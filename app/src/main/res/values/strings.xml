@@ -86,4 +86,12 @@
     <!-- Editor Activity Edit a Pet title -->
     <string name="editor_activity_title_edit">Edit pet</string>
 
+    <string name="delete_confirmation_dialog_msg">Delete this pet?</string>
+
+    <string name="delete_confirmation_dialog_delete">DELETE</string>
+    <string name="delete_confirmation_dialog_cancel">Cancel</string>
+    <string name="editor_delete_pet_failed">Unable to delete pet</string>
+    <string name="editor_delete_pet_success">Deleted pet</string>
+    <string name="empty_breed_input">Unknown Breed</string>
+
 </resources>

@@ -144,10 +144,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
     private void savePet() {
 
-        if (TextUtils.isEmpty(mNameEditText.getText().toString().trim())
-                || TextUtils.isEmpty(mBreedEditText.getText().toString().trim())) {
+        if (TextUtils.isEmpty(mNameEditText.getText().toString().trim())) {
 
-            Toast.makeText(this, "Missing input fields", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -199,6 +197,28 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     }
 
+    private void deletePet() {
+
+        if (intentUri != null) {
+
+            int rowsDeleted = getContentResolver().delete(intentUri, null, null);
+
+            if (rowsDeleted == 0) {
+
+                Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
+                        Toast.LENGTH_SHORT).show();
+            }
+            else {
+
+                Toast.makeText(this, getString(R.string.editor_delete_pet_success),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        finish();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -234,6 +254,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
 
+                showDeleteConfirmationDialog();
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
@@ -306,6 +327,29 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void showDeleteConfirmationDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_confirmation_dialog_msg);
+        builder.setPositiveButton(R.string.delete_confirmation_dialog_delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                deletePet();
+            }
+        });
+
+        builder.setNegativeButton(R.string.delete_confirmation_dialog_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     @Override
